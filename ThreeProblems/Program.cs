@@ -1,10 +1,9 @@
 ﻿Random rnd = new Random(4000);
 
-char diceChoice;
+int userChoice = 0;
 
-int rolls = 1;
-int wins = 1;
-
+do
+{
 System.Console.WriteLine("=== Lab 06 ===");
 System.Console.WriteLine("Hello! Please choose from the options below.");
 System.Console.WriteLine("1. The Grade Checker");
@@ -14,7 +13,6 @@ System.Console.WriteLine("4. All Three");
 System.Console.WriteLine("5. Quit");
 System.Console.Write("Please select an option from above: ");
 
-int userChoice = 0;
 userChoice=Convert.ToInt32(Console.ReadLine());
 
 while(userChoice <= 0 || userChoice >= 6)
@@ -23,9 +21,7 @@ while(userChoice <= 0 || userChoice >= 6)
     
     userChoice = Convert.ToInt32(Console.ReadLine());
 }
-
-
-if(userChoice == 1 || userChoice == 4)
+if( userChoice == 1 || userChoice == 4)
 {
     System.Console.WriteLine("=== The Grade Checker ===");
     System.Console.Write("Please enter a score between 0 and 100: ");
@@ -60,7 +56,10 @@ if(userChoice == 1 || userChoice == 4)
 }
 
 if(userChoice == 2 || userChoice == 4)
-    
+{
+    char diceChoice;
+    int rolls = 1;
+    int wins = 1;
     
     do
     {
@@ -87,23 +86,90 @@ if(userChoice == 2 || userChoice == 4)
         rolls++;
        
         
-        System.Console.Write("Would you like to role again? (y or n)");
+        System.Console.Write("Would you like to role again? (y or n) ");
         diceChoice = Convert.ToChar(Console.ReadLine());
         diceChoice = char.ToLower(diceChoice);
         
         while(diceChoice != 'y' && diceChoice != 'n')
             {
-                System.Console.Write("Please choose y or n!");
+                System.Console.Write("Please choose y or n! ");
                 diceChoice = Convert.ToChar(Console.ReadLine());
             }
         
     }while(diceChoice != 'n');
       
-     
+}    
 
 if(userChoice == 3 || userChoice == 4)
 {
+    int passingScores = 0; 
+    double totalScores = 0;
+    double average = 0;
+    double highest = 0;
+    System.Console.Write("How many scores would you like to enter? (15 score limit) ");
+    int scoreLengh = Convert.ToInt32(Console.ReadLine());
+    double[] scores = new double[scoreLengh];
+
+    while(scoreLengh <= 1 || scoreLengh > 15)
+        {
+            System.Console.Write("Please enter a number between 2 and 15 ");
+            scoreLengh = Convert.ToInt32(Console.ReadLine());
+        }
+
+    if(scoreLengh > 15)
+    {
+        scoreLengh = 15;
+    }
     
+    for(int i = 0; i < scoreLengh; i++)
+    {
+        if(i == 0)
+        {
+         System.Console.Write($"Please enter the {i + 1}st score ");
+         scores[i] = Convert.ToInt32(Console.ReadLine());
+        }
+        else if(i == 1)
+        {
+         System.Console.Write($"Please enter the {i + 1}nd score ");
+         scores[i] = Convert.ToInt32(Console.ReadLine()); 
+        }
+        else if(i == 2)
+        {
+         System.Console.Write($"Please enter the {i + 1}rd score ");
+         scores[i] = Convert.ToInt32(Console.ReadLine());   
+        }
+        else
+        {
+         System.Console.Write($"Please enter the {i + 1}th score ");
+         scores[i] = Convert.ToInt32(Console.ReadLine()); 
+        }      
+        
+    }
+
+    for(int i = 0; i < scoreLengh; i++)
+    {
+        System.Console.WriteLine($"Score {i + 1}: {scores[i]}");
+    }
+    foreach (double score in scores)
+    {
+        totalScores += score;
+        average = totalScores / scoreLengh;
+        highest = Math.Max(highest, score);     
+        
+        
+        if(score > 60)
+        {
+            passingScores++;
+        }
+        
+    }  
+
+    System.Console.WriteLine($"Total: {totalScores}");  
+    System.Console.WriteLine($"Average: {(average).ToString("F1")}");
+    System.Console.WriteLine($"Highest: {highest}");
+    System.Console.WriteLine($"Passing {passingScores} of {scoreLengh}");
 }
+
+}while(userChoice != 5);
 
 
